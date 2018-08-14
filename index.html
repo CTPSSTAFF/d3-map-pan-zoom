@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head lang="en">
+<meta charset="utf-8">
+<title>D3 Map of Massachusetts Towns</title>
+<link rel="stylesheet" href="app.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.20/topojson.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<h2>D3 Map of Massachusetts Towns with Pan/Zoom</h2>
+<input type="button" id="showhide" value="Hide description"></input>
+<br/>
+<div id="blurb">
+<h3>Data source: TopoJSON</h3>
+<ol>
+<li>Spatial and tabular data loaded from TopoJSON file.</li>
+<ul>
+<li>MassGIS MGIS_TOWNSPOLYM layer.</li>
+</ul>
+<li>GeoJSON first generated in ArcMap using Calvin Metcalf's 
+    <a href="http://calvinmetcalf.com/post/53837935250/guide-to-esri-to-open" target="_blank">esri-to-open</a> tool.</li>
+<li>GeoJSON then converted to TopoJSON using <a href="http://geojson.io" target="_blank">geojson.io</a> web service.</li>
+<li>TopoJSON manipulated using Mike Bostock's <a href="https://github.com/mbostock/topojson/wiki">topojson.js</a> library.</li>
+<li>Pan and zoom (from 0.2x to 5x) - See lines 28 to 38 and line 45 in the JavaScript code.</li>
+</ol>
+</div>
+<script>
+	$(document).ready(function() {
+		CTPS.demoApp.init();	
+	});	
+</script>
+</body>
+</html>
