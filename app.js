@@ -49,7 +49,9 @@ CTPS.demoApp.generateViz = function() {
 	}
 	
 	//Then define the zoom behavior
+	// Constrain zoom range to be from 1/6x to 10x (N.B. application of scale factor)
 	var zoom = d3.zoom()
+				 .scaleExtent([1.0, 60.0])
 				 .on("zoom", zooming);
 				 
 	//The center of the state (approximate)
@@ -86,7 +88,11 @@ CTPS.demoApp.generateViz = function() {
 		   .append("path")
 		   .attr("d", geoPath)
 		   .attr("id", function(d, i) { return d.properties.town_id})
-		   .style("fill", "#edab1e")
+		   .style("fill", function(d, i) {
+					var fourcolors = ['#7fc97f','#beaed4','#fdc086','#ffff99'];
+					var retval = fourcolors[d.properties.fourcolor-1];
+					return retval;
+				})
 		   .append("title")   
 		   .text(function(d, i) { return d.properties.town; })
 	});
