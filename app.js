@@ -11,15 +11,15 @@ CTPS.demoApp.init = function() {
 			this.value = 'Show description';		
 		}
 	});
-	d3.json("JSON/TOWNS_POLYM.topo.json",
+	d3.json("JSON/towns_polym.geojson",
 		function(error, data) { 
 			CTPS.demoApp.generateViz(data); 
 		});
 } // CTPS.demoApp.init()
 
-CTPS.demoApp.generateViz = function(topoJsonData) {	
+CTPS.demoApp.generateViz = function(geoJsonData) {	
 
-	var townsFeatureCollection = topojson.feature(topoJsonData, topoJsonData.objects.collection);
+	var townsFeatureCollection = geoJsonData.features;
 	
 	var width = 960,
 		height = 500;
@@ -54,7 +54,7 @@ CTPS.demoApp.generateViz = function(topoJsonData) {
 			
 	// Create Massachusetts towns map - all towns symbolized the same way.
 	var maSVG = svgContainer.selectAll("path")
-		.data(townsFeatureCollection.features)
+		.data(townsFeatureCollection)
 		.enter()
 		.append("path")
 		.attr("id", function(d, i) { return d.properties.TOWN_ID; })
