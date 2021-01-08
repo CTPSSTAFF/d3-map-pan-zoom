@@ -1,7 +1,4 @@
-var CTPS = {};
-CTPS.demoApp = {};
-
-CTPS.demoApp.init = function() {
+function initialize() {
 	$('#showhide').click(function(e) {
 		if (this.value === 'Show description') {
 			$('#blurb').show();
@@ -11,10 +8,10 @@ CTPS.demoApp.init = function() {
 			this.value = 'Show description';		
 		}
 	}); 
-	CTPS.demoApp.generateViz();
-} // CTPS.demoApp.init()
+	generateViz();
+} // initialize()
 
-CTPS.demoApp.generateViz = function() {	
+function generateViz() {
 	var width = 960,
 		height = 500;
 
@@ -31,30 +28,32 @@ CTPS.demoApp.generateViz = function() {
 				.attr("height", height)
 				.style("border", "2px solid steelblue");
 
-	//Define what to do when panning or zooming - event listener
-	var zooming = function(d) {
-		//Log d3.event.transform, so you can see all the goodies inside
-		// console.log(d3.event.transform);
+	// Define what to do when panning or zooming - event listener.
+	// As of D3V6, event handlers are passed the _event_ and _datum_ as 
+	// parameters, and _this_ is being the target node.
+	var zooming = function(e, d) {
+		// Log e.transform, so you can see all the goodies inside
+		// console.log(e.transform);
 		
-		//New offset array
-		var offset = [d3.event.transform.x, d3.event.transform.y];
-		//Calculate new scale
-		var newScale = d3.event.transform.k * 2000;
-		//Update projection with new offset and scale
+		// New offset array
+		var offset = [e.transform.x, e.transform.y];
+		// Calculate new scale
+		var newScale = e.transform.k * 2000;
+		// Update projection with new offset and scale
 		projection.translate(offset)
 				  .scale(newScale);
-		//Update all paths
+		// Update all paths
 		svg.selectAll("path")
 			.attr("d", geoPath);
 	}
 	
-	//Then define the zoom behavior
+	// Then define the zoom behavior
 	// Constrain zoom range to be from 1/6x to 10x (N.B. application of scale factor)
 	var zoom = d3.zoom()
 				 .scaleExtent([1.0, 60.0])
 				 .on("zoom", zooming);
 				 
-	//The center of the state (approximate)
+	// The center of the state (approximate)
 	var center = projection([-71.4, 42.4]);
 
 	// Create a container in which all zoomable objects will live
@@ -77,23 +76,24 @@ CTPS.demoApp.generateViz = function() {
 		.attr("opacity", 0);
 		
 	//Load in GeoJSON data
-	d3.json("JSON/towns_polym.geojson", function(json) {
-		var townsFeatureCollection = json.features;
+	d3.json("JSON/towns_polym.geojson")
+		.then(function(json) {
+			var townsFeatureCollection = json.features;
 
-		//Bind data and create one path per GeoJSON feature
-		// Create Massachusetts towns map - all towns symbolized the same way.
-		map.selectAll("path")
-		   .data(json.features)
-		   .enter()
-		   .append("path")
-		   .attr("d", geoPath)
-		   .attr("id", function(d, i) { return d.properties.town_id})
-		   .style("fill", function(d, i) {
-					var fourcolors = ['#7fc97f','#beaed4','#fdc086','#ffff99'];
-					var retval = fourcolors[d.properties.fourcolor-1];
-					return retval;
-				})
-		   .append("title")   
-		   .text(function(d, i) { return d.properties.town; })
+			//Bind data and create one path per GeoJSON feature
+			// Create Massachusetts towns map - all towns symbolized the same way.
+			map.selectAll("path")
+			   .data(json.features)
+			   .enter()
+			   .append("path")
+			   .attr("d", geoPath)
+			   .attr("id", function(d, i) { return d.properties.town_id})
+			   .style("fill", function(d, i) {
+						var fourcolors = ['#7fc97f','#beaed4','#fdc086','#ffff99'];
+						var retval = fourcolors[d.properties.fourcolor-1];
+						return retval;
+					})
+			   .append("title")   
+			   .text(function(d, i) { return d.properties.town; });
 	});
-} // CTPS.demoApp.generateViz()
+} // generateViz()
