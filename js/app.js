@@ -76,7 +76,7 @@ function generateViz() {
 		.attr("opacity", 0);
 		
 	//Load in GeoJSON data
-	d3.json("JSON/towns_polym.geojson")
+	d3.json("../json/towns_polym.geojson")
 		.then(function(json) {
 			var townsFeatureCollection = json.features;
 
