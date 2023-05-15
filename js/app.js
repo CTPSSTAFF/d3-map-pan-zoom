@@ -15,7 +15,7 @@ function generateViz() {
 	var width = 960,
 		height = 500;
 		
-	// SVG Viewport
+	// SVG drawing area
 	var svg = d3.select("body")
 				.append("svg")
 				.attr("width", width)
@@ -32,7 +32,8 @@ function generateViz() {
 	// As of D3V6, event handlers are passed the _event_ and _datum_ as 
 	// parameters, and _this_ is being the target node.
 	var zooming = function(e, d) {
-		// Log e.transform, so you can see all the goodies inside
+		// Here, uncomment the following line to print the contents of 'e.transform'
+		// in the console window if you'd like to see all the goodies inside of it:
 		// console.log(e.transform);
 		
 		// New offset array
