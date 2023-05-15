@@ -14,19 +14,19 @@ function initialize() {
 function generateViz() {
 	var width = 960,
 		height = 500;
-
-	var projection = d3.geoConicConformal()
-		.parallels([41 + 43 / 60, 42 + 41 / 60])
-	    .rotate([71 + 30 / 60, -41 ]);
 		
-	var geoPath = d3.geoPath().projection(projection);
-
 	// SVG Viewport
 	var svg = d3.select("body")
 				.append("svg")
 				.attr("width", width)
 				.attr("height", height)
 				.style("border", "2px solid steelblue");
+
+	var projection = d3.geoConicConformal()
+		.parallels([41 + 43 / 60, 42 + 41 / 60])
+	    .rotate([71 + 30 / 60, -41 ]);
+		
+	var geoPath = d3.geoPath().projection(projection);
 
 	// Define what to do when panning or zooming - event listener.
 	// As of D3V6, event handlers are passed the _event_ and _datum_ as 
