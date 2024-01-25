@@ -36,3 +36,17 @@ The generateViz function is organized as follows:
    the code appends an SVG \<path\> to the SVG __map__ container for each feature in the
    GeoJSON, i.e., each town
 
+## Running the app
+* Clone the repository into a directory, call it 'x'
+* 'cd x'
+* python -m http.server 8888 --bind localhost
+* In a web browser:
+  * http://localhost:8888
+
+## Colophon
+Author: [Ben Krepp](mailto:bkrepp@ctps.org)  
+Address: Central Transportation Planning Staff, Boston Region Metropolitan Planning Agency  
+10 Park Plaza  
+Suite 2150  
+Boston, MA 02116  
+United States
